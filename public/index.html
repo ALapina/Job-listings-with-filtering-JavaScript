@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Job Listings with filtering (JavaScript)</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+
+  <body class="bg-neutral-100 font-body font-bold">
+    <header id="filter-panel" class="mb-14 sm:mb-10">
+      <!-- TODO: background-image в отдельный класс и на 375 новый бэк. Но не обязательно! -->
+      <div
+        class="bg-primary h-36"
+        style="background-image: url(./images/bg-header-desktop.svg)"
+      ></div>
+      <!-- TODO: max-width и width с бокс шадов в класс!!! -->
+      <!-- TODO: ВСЕМ КНОПКАМ добавить aria-label="delete frontend filter" и вместо фронтенда подставлять что там должно быть -->
+      <div
+        class="flex justify-between bg-white rounded-md m-auto -mt-10"
+        style="
+          max-width: 1440px;
+          width: 90%;
+          box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
+        "
+      >
+        <ul class="flex flex-wrap pt-6 pr-6 pl-6">
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">JavaScript</span
+            ><button
+              aria-label="delete frontend filter"
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">HTML</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">Frontend</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">Fullstack</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">Backend</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-4 mb-4">
+            <span class="p-2 text-primary sm:p-3">Junior</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <!-- <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Midweight</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Senior</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">CSS</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Python</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Ruby</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Sass</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">React</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Django</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">Vue</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li class="bg-neutral-200 rounded-md mr-5 mb-5">
+            <span class="p-2 text-primary sm:p-3">RoR</span
+            ><button
+              class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+                <path
+                  fill="#FFF"
+                  fill-rule="evenodd"
+                  d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
+                />
+              </svg>
+            </button>
+          </li> -->
+        </ul>
+        <button
+          class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
+        >
+          Clear
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- TODO: Добавить брейкпоинт на 980px и вместо flex wrap делать column что бы точно менялся порядок -->
+      <!-- TODO: Outline для кнопок. мб фокус визибл? Но я бы оставила бы здесь и так аутлайны -->
+      <!-- TODO: между 1d ago ТОчка определиться с дизайном -->
+      <section
+        class="bg-white mb-14 sm:mb-10 mx-auto rounded-md flex flex-wrap md:flex-nowrap justify-between items-center border-l-8 border-primary"
+        style="
+          max-width: 1440px;
+          width: 90%;
+          box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
+        "
+      >
+        <div class="flex flex-col sm:flex-row my-6">
+          <div
+            class="ml-6 flex-shrink-0 w-16 sm:w-auto -mt-14 mb-4 sm:mb-0 sm:mt-0"
+          >
+            <img src="./images/photosnap.svg" alt="company logo" />
+          </div>
+
+          <div class="ml-6">
+            <div class="flex flex-wrap items-center">
+              <p class="text-primary mr-3">The Air Filter Company</p>
+              <ul class="flex text-white text-xs">
+                <li class="bg-primary rounded-2xl py-1 px-2">NEW!</li>
+                <li class="bg-neutral-400 rounded-2xl py-1 px-2 ml-3"></li>
+              </ul>
+            </div>
+            <h2 class="text-lg my-2">
+              <a class="hover:text-primary" href="#"
+                >Senior Frontend Developer</a
+              >
+            </h2>
+            <div>
+              <ul
+                class="flex flex-wrap items-center text-neutral-300 font-medium"
+              >
+                <li>1d ago</li>
+                <span
+                  class="rounded-full bg-neutral-300 mx-2"
+                  style="width: 5px; height: 5px"
+                ></span>
+                <li>Full Time</li>
+                <span class="h-1 w-1 rounded-full bg-neutral-300 mx-2"></span>
+                <li>Worldwide</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mx-6 md:mx-0md:mb-0 h-0.5 md:h-0 w-full md:w-0 bg-neutral-300 rounded-full"
+        ></div>
+
+        <div class="mt-6 ml-6">
+          <ul class="flex flex-wrap">
+            <li>
+              <button
+                class="font-bold bg-neutral-200 rounded-md hover:bg-primary hover:text-white mr-4 mb-4 p-2 text-primary"
+              >
+                Frontend
+              </button>
+            </li>
+            <li>
+              <button
+                class="font-bold bg-neutral-200 rounded-md hover:bg-primary hover:text-white mr-4 mb-4 p-2 text-primary"
+              >
+                Senior
+              </button>
+            </li>
+            <li>
+              <button
+                class="font-bold bg-neutral-200 rounded-md hover:bg-primary hover:text-white mr-4 mb-4 p-2 text-primary"
+              >
+                HTML
+              </button>
+            </li>
+            <li>
+              <button
+                class="font-bold bg-neutral-200 rounded-md hover:bg-primary hover:text-white mr-4 mb-4 p-2 text-primary"
+              >
+                CSS
+              </button>
+            </li>
+            <li>
+              <button
+                class="font-bold bg-neutral-200 rounded-md hover:bg-primary hover:text-white mr-4 mb-4 p-2 text-primary"
+              >
+                JavaScript
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="https://github.com/ALapina">Anna Lapina</a>.
+    </div>
+    <!-- </div> -->
+  </body>
+  <script src="./main.js"></script>
+</html>
+
+<!-- <div class="block active">
+
+      <img class="logo" src="" alt="">
+
+
+      <div class="block-content">
+        <div class="top">
+          <span class="company"></span>
+          <span class="new"></span>
+          <span class="featured"></span>
+        </div>
+        <div class="middle">
+          <span class="position"></span>
+        </div>
+        <div class="bottom">
+          <span class="posted-at"></span>
+          <span class="contract"></span>
+          <span class="location"></span>
+        </div>
+      </div>
+
+      <div class="block-filter">
+        <span class="role"></span>
+        <span class="level"></span>
+        <span class="languages"></span>
+        <span class="tools"></span>
+      </div>
+
+
+    </div>
+
+    <div class="test-block">
+      <div class="hui"></div>
+    </div>
+
+    <div class="test-block2">
+      <div class="name"></div>
+      <div class="surname"></div>
+      <div class="true-or-false"></div>
+    </div> -->
