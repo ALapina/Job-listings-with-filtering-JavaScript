@@ -1,4 +1,6 @@
 const selected = { roles: [], levels: [], languages: [], tools: [] };
+//дату сохраняем в офферс что бы можно было использовать в redrawOffers
+let offers = [];
 const main = document.querySelector("#main");
 const filterPanel = document.querySelector("#filter-panel");
 
@@ -7,7 +9,8 @@ fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
     // console.log(data);
-    data.forEach((element) => {
+    offers = data;
+    offers.forEach((element) => {
       // console.log(element);
       //draw initial data
       createOffer(element);
@@ -168,39 +171,29 @@ const addToSelected = (group, value) => {
     selected[group].push(value);
   }
 
-  redrawSelected(group);
+  redrawSelected();
+  redrawOffers();
 };
 
-// ------------------------------------ STEP 5. Draw and redraw selected filter panel ------------------------------------
-const redrawSelected = (group) => {
-  // console.log(filterPanel);
-  // console.log(group);
-  // console.log(selected[group]);
+// const removeFromSelected = () => {};
 
+// ------------------------------------ STEP 5. Draw and redraw selected filter panel ------------------------------------
+const redrawSelected = () => {
   //Cleanup Нужен что бы не добавлять один и тот же элемент несколько раз например фронтенд
   filterPanel.innerHTML = "";
 
-  for (const [key, value] of Object.entries(selected)) {
-    console.log(`${key}: ${value}`);
+  const filter = document.createElement("div");
 
-    const filter = document.createElement("div");
+  const createFilterElements = () => {
+    let element = "";
 
-    const filterTemplate2 = `<p>${value}</p>`;
-
-    const filterTemplate = `<div
-  class="flex justify-between bg-white rounded-md m-auto -mt-10"
-  style="
-    max-width: 1440px;
-    width: 90%;
-    box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
-  "
->
-  <ul class="flex flex-wrap pt-6 pr-6 pl-6">
-
-    <li class="bg-neutral-200 rounded-md mr-4 mb-4">
-      <span class="p-2 text-primary sm:p-3">${
-        value.length !== 0 ? value : ""
-      }</span
+    for (const [key, value] of Object.entries(selected)) {
+      // console.log(selected);
+      // console.log(`${key}: ${value}`);
+      value.map((el) => {
+        // console.log(el);
+        element += `<li class="bg-neutral-200 rounded-md mr-4 mb-4">
+      <span class="p-2 text-primary sm:p-3">${el}</span
       ><button
         aria-label="delete frontend filter"
         class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
@@ -213,71 +206,39 @@ const redrawSelected = (group) => {
           />
         </svg>
       </button>
-    </li>
-  </ul>
-  <button
-    class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
-  >
-    Clear
-  </button>
-</div>`;
+    </li>`;
+        return element;
+      });
+    }
+    return element;
+  };
 
-    filter.innerHTML = filterTemplate;
-
-    filterPanel.appendChild(filter);
-  }
-
-  const filterTemplate3 = `<div
-  class="flex justify-between bg-white rounded-md m-auto -mt-10"
-  style="
-    max-width: 1440px;
-    width: 90%;
-    box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
-  "
+  const filterTemplate = `<div
+class="flex justify-between bg-white rounded-md m-auto -mt-10"
+style="
+  max-width: 1440px;
+  width: 90%;
+  box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
+"
 >
-  <ul class="flex flex-wrap pt-6 pr-6 pl-6">
-
-    <li class="bg-neutral-200 rounded-md mr-4 mb-4">
-      <span class="p-2 text-primary sm:p-3">${value}</span
-      ><button
-        aria-label="delete frontend filter"
-        class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
-          <path
-            fill="#FFF"
-            fill-rule="evenodd"
-            d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
-          />
-        </svg>
-      </button>
-    </li>
-  </ul>
-  <button
-    class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
-  >
-    Clear
-  </button>
+<ul class="flex flex-wrap pt-6 pr-6 pl-6">${createFilterElements()}</ul>
+<button
+  class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
+>
+  Clear
+</button>
 </div>`;
 
-  // const rolesSelected = selected["roles"].map(
-  //   (el) => `<span class="p-2 text-primary sm:p-3">${el}</span
-  // >`
-  // );
+  filter.innerHTML = filterTemplate;
 
-  // const isThereRole = () => {
-  //   if(selected["roles"].length===0)
-  // };
+  filterPanel.appendChild(filter);
 };
 
-// console.log(selected);
-
-// let offers = [];
-
-// fetch("./data.json")
-//   .then((response) => response.json())
-//   .then((data) => {
-//     offers = data;
+// ------------------------------------ STEP 6. Draw and redraw selected offers ------------------------------------
+// const redrawOffers = () => {
+//   //cleanup
+//   main.innerHTML = "";
+//   data.forEach((element) => {
+//     createOffer(element);
 //   });
-
-// console.log(offers);
+// };
