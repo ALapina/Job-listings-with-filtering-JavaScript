@@ -1,4 +1,4 @@
-const selected = { roles: [], levels: [], languages: [], tools: [] };
+let selected = { roles: [], levels: [], languages: [], tools: [] };
 //дату сохраняем в офферс что бы можно было использовать в redrawOffers
 let offers = [];
 const main = document.querySelector("#main");
@@ -16,6 +16,8 @@ fetch("./data.json")
       createOffer(element);
     });
   });
+
+//TODO!!!! Везде поменять id на data-js!!
 
 // ------------------------------------ STEP 2. Render list of companys ------------------------------------
 const createOffer = (element) => {
@@ -172,10 +174,8 @@ const addToSelected = (group, value) => {
   }
 
   redrawSelected();
-  redrawOffers();
+  // redrawOffers();
 };
-
-// const removeFromSelected = () => {};
 
 // ------------------------------------ STEP 5. Draw and redraw selected filter panel ------------------------------------
 const redrawSelected = () => {
@@ -183,10 +183,8 @@ const redrawSelected = () => {
   filterPanel.innerHTML = "";
 
   const filter = document.createElement("div");
-
   const createFilterElements = () => {
     let element = "";
-
     for (const [key, value] of Object.entries(selected)) {
       // console.log(selected);
       // console.log(`${key}: ${value}`);
@@ -194,8 +192,8 @@ const redrawSelected = () => {
         // console.log(el);
         element += `<li class="bg-neutral-200 rounded-md mr-4 mb-4">
       <span class="p-2 text-primary sm:p-3">${el}</span
-      ><button
-        aria-label="delete frontend filter"
+      ><button data-js="delete-filter"
+        aria-label="delete ${el} filter" data-filter-name="${el}" data-filter-group="${key}"
         class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
@@ -222,23 +220,102 @@ style="
 "
 >
 <ul class="flex flex-wrap pt-6 pr-6 pl-6">${createFilterElements()}</ul>
-<button
-  class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
+<button id="delete-all-filters"
+  class="self-center font-bold text-neutral-300 mr-5 hover:text-primary hover:underline"
 >
   Clear
 </button>
 </div>`;
 
   filter.innerHTML = filterTemplate;
-
   filterPanel.appendChild(filter);
+
+  // ------------------------------------ STEP 6. Event listener on delete filter buttons
+
+  const deleteFilterButtons = Array.from(
+    filter.querySelectorAll("[data-js=delete-filter]")
+  );
+  // console.log(deleteFilterButtons);
+  deleteFilterButtons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      // console.log(event.target.dataset.filterName);
+      //ОБЯЗАТЕЛЬНО! используем currentTarget! Из за event propagation!
+      //У нас внутри кнопки находится ещё один элемент - svg. И если использовать target то эвент листенер будет действовать только на button и не будет действовать на svg!
+      // А currentTarget распространяет действие эвентлистенера и на элементы внутри кнопки то есть на svg!
+      //Ещё можно использовать e.stopPropagation();
+      // https://www.sitepoint.com/event-bubbling-javascript/
+      // console.log(event.currentTarget);
+      removeFromSelected(
+        event.currentTarget.dataset.filterGroup,
+        event.currentTarget.dataset.filterName
+      );
+    });
+  });
+
+  // ------------------------------------ STEP 7. Clear all filters ------------------------------------
+  const deleteAllFiltersButton = filter.querySelector("#delete-all-filters");
+  // console.log(deleteAllFiltersButton);
+  deleteAllFiltersButton.addEventListener("click", () => {
+    selected = { roles: [], levels: [], languages: [], tools: [] };
+    filterPanel.innerHTML = "";
+
+    console.log(selected);
+  });
 };
 
-// ------------------------------------ STEP 6. Draw and redraw selected offers ------------------------------------
-// const redrawOffers = () => {
-//   //cleanup
-//   main.innerHTML = "";
-//   data.forEach((element) => {
-//     createOffer(element);
-//   });
-// };
+// ------------------------------------ STEP 8.remove element From Selected ------------------------------------
+const removeFromSelected = (group, valueToDelete) => {
+  // console.log(group);
+  // console.log(valueToDelete);
+
+  //по кнопке делет удаляем данный элемент из селектед
+  if (selected[group].includes(valueToDelete)) {
+    selected[group] = selected[group].filter(
+      (element) => element !== valueToDelete
+    );
+    redrawSelected();
+  }
+  // ------------------------------------ STEP 9. If selected is empty - delete filter panel ------------------------------------
+  //Если селект пуст - удаляем всю панель фильтр
+  const allValues = Object.values(selected);
+  if (allValues.every((currentValue) => currentValue.length === 0)) {
+    //delete filter panel
+    filterPanel.innerHTML = "";
+  }
+
+  console.log(selected);
+};
+
+//
+
+// ------------------------------------ STEP . Check if offer need to be drawn ------------------------------------
+//определяем должен ли офер рендерится
+const isOfferSelected = (offer) => {
+  // console.log(offer.role);
+  //object.entries может быть и в переменной group and value
+
+  //есть ли в селектед элемент из офера например фронтенд и возвращаем тру
+  // а ещё нужно возвращать тру когда в селектед длина равна 0 что бы перерисовывать когда селектед пустой
+  //selected["roles"].length === 0
+  if (selected["roles"].includes(offer.role)) {
+    return true;
+  }
+  if (selected["levels"].includes(offer.level)) {
+    return true;
+  }
+
+  //БАГ!!! ПВыбираем серьор и фронтенд - отображаются все фронтенды фильтр серьор не берется в значение
+  //МБ ФИЛЬТР ЗДЕСЬ???
+};
+
+// ------------------------------------ STEP . Draw and redraw selected offers ------------------------------------
+const redrawOffers = () => {
+  //cleanup
+  main.innerHTML = "";
+  offers.forEach((offer) => {
+    //получается проходим по каждому оферу, и если этот офер в isOfferSelected возвращает true тогда перерисовывем оффер
+    if (isOfferSelected(offer)) {
+      createOffer(offer);
+    }
+  });
+};
