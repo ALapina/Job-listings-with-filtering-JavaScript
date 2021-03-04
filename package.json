@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "postcss -w src/styles.css -o public/styles.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "postcss src/styles.css -o public/styles.css --env=production"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,6 @@
     "postcss": "^8.2.6",
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.0.3"
-  }
+  },
+  "homepage": "/Job-listings-with-filtering-JavaScript"
 }

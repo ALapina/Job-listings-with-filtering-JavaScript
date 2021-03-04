@@ -16,22 +16,14 @@
 
     <link rel="stylesheet" href="styles.css" />
     <style>
-      .attribution {
-        font-size: 11px;
-        text-align: center;
-      }
-
-      .attribution a {
-        color: hsl(228, 45%, 44%);
+      button:focus {
+        outline: 2px dashed hsl(228, 45%, 44%);
+        outline-offset: 0px;
       }
     </style>
   </head>
 
   <body class="bg-neutral-100 font-body font-bold">
-    <!-- TODO: background-image в отдельный класс и на 375 новый бэк. Но не обязательно! -->
-    <!-- TODO: max-width и width с бокс шадов в класс!!! -->
-    <!-- TODO: ВСЕМ КНОПКАМ добавить aria-label="delete frontend filter" и вместо фронтенда подставлять что там должно быть -->
-
     <header class="mb-14 sm:mb-10">
       <div
         class="bg-primary h-36"
@@ -41,92 +33,20 @@
       <div id="filter-panel"></div>
     </header>
 
-    <main id="main">
-      <!-- TODO: Добавить брейкпоинт на 980px и вместо flex wrap делать column что бы точно менялся порядок -->
-      <!-- TODO: Outline для кнопок. мб фокус визибл? Но я бы оставила бы здесь и так аутлайны -->
-      <!-- TODO: между 1d ago ТОчка определиться с дизайном -->
-    </main>
+    <main id="main"></main>
 
-    <div class="attribution">
+    <div class="attribution text-xs text-center">
       Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+      <a
+        class="text-attribution"
+        href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank"
         >Frontend Mentor</a
-      >. Coded by <a href="https://github.com/ALapina">Anna Lapina</a>.
+      >. Coded by
+      <a class="text-attribution" href="https://github.com/ALapina"
+        >Anna Lapina</a
+      >.
     </div>
-    <!-- </div> -->
   </body>
   <script src="./main.js"></script>
 </html>
-
-<!-- <div class="block active">
-
-      <img class="logo" src="" alt="">
-
-
-      <div class="block-content">
-        <div class="top">
-          <span class="company"></span>
-          <span class="new"></span>
-          <span class="featured"></span>
-        </div>
-        <div class="middle">
-          <span class="position"></span>
-        </div>
-        <div class="bottom">
-          <span class="posted-at"></span>
-          <span class="contract"></span>
-          <span class="location"></span>
-        </div>
-      </div>
-
-      <div class="block-filter">
-        <span class="role"></span>
-        <span class="level"></span>
-        <span class="languages"></span>
-        <span class="tools"></span>
-      </div>
-
-
-    </div>
-
-    <div class="test-block">
-      <div class="hui"></div>
-    </div>
-
-    <div class="test-block2">
-      <div class="name"></div>
-      <div class="surname"></div>
-      <div class="true-or-false"></div>
-    </div> -->
-
-<!-- <div
-  class="flex justify-between bg-white rounded-md m-auto -mt-10"
-  style="
-    max-width: 1440px;
-    width: 90%;
-    box-shadow: 0px 15px 20px -5px rgba(13, 113, 130, 0.15);
-  "
->
-  <ul class="flex flex-wrap pt-6 pr-6 pl-6">
-    <li class="bg-neutral-200 rounded-md mr-4 mb-4">
-      <span class="p-2 text-primary sm:p-3">Frontend</span
-      ><button
-        aria-label="delete frontend filter"
-        class="p-3 bg-primary text-white rounded-r-md hover:bg-neutral-400"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14">
-          <path
-            fill="#FFF"
-            fill-rule="evenodd"
-            d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"
-          />
-        </svg>
-      </button>
-    </li>
-  </ul>
-  <button
-    class="font-bold text-neutral-300 pr-5 hover:text-primary hover:underline"
-  >
-    Clear
-  </button>
-</div> -->
