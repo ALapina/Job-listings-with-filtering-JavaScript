@@ -3,3 +3,10 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer utilities {
+  button:focus {
+    outline: 2px dashed hsl(228, 45%, 44%);
+    outline-offset: 0px;
+  }
+}
