@@ -45,9 +45,7 @@ const createOffer = (offer) => {
 
   //toolsTemplate.join("") - что бы убрать запятые между элементами в массиве
   const sectionTemplate = `<section 
-  class="bg-white max-w-8xl w-11/12 shadow-block mb-14 sm:mb-10 mx-auto rounded-md flex flex-wrap md:flex-nowrap justify-between items-center border-l-8 border-${
-    isItFeatured ? "primary" : "white"
-  }">
+  class="bg-white max-w-8xl w-11/12 shadow-block mb-14 sm:mb-10 mx-auto rounded-md flex flex-wrap md:flex-nowrap justify-between items-center border-l-8 ${isItFeatured ? "border-primary" : "border-white"}">
       <div class="flex flex-col sm:flex-row my-6">
         <div class="ml-6 flex-shrink-0 w-16 sm:w-auto -mt-14 mb-4 sm:mb-0 sm:mt-0">
           <img src="${logo}" alt="${company} logo" />
@@ -57,14 +55,8 @@ const createOffer = (offer) => {
           <div class="flex flex-wrap items-center">
             <p class="text-primary mr-3">${company}</p>
             <ul class="flex text-white text-xs">
-              <li class="bg-primary rounded-2xl py-${isItNew ? "1" : "0"} px-${
-    isItNew ? "2" : "0"
-  }">${isItNew ? "NEW!" : ""}</li>
-              <li class="bg-neutral-400 rounded-2xl py-${
-                isItFeatured ? "1" : "0"
-              } px-${isItFeatured ? "2" : "0"} ml-3">${
-    isItFeatured ? "FEATURED" : ""
-  }</li>
+              <li class="bg-primary rounded-2xl ${isItNew ? "py-1" : "py-0"} ${isItNew ? "px-2" : "px-0"}">${isItNew ? "NEW!" : ""}</li>
+              <li class="bg-neutral-400 rounded-2xl ${isItFeatured ? "py-1" : "py-0"} ${isItFeatured ? "px-2" : "px-0"} ml-3">${isItFeatured ? "FEATURED" : ""}</li>
             </ul>
           </div>
           <h2 class="text-lg my-2">
