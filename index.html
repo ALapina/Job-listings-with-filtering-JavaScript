@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Job Listings with filtering (JavaScript)</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      button:focus {
+        outline: 2px dashed hsl(228, 45%, 44%);
+        outline-offset: 0px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-neutral-100 font-body font-bold">
+    <header class="mb-14 sm:mb-10">
+      <div
+        class="bg-primary h-36"
+        style="background-image: url(./images/bg-header-desktop.svg)"
+      ></div>
+
+      <div id="filter-panel"></div>
+    </header>
+
+    <main id="main"></main>
+
+    <div class="attribution text-xs text-center">
+      Challenge by
+      <a
+        class="text-attribution"
+        href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank"
+        >Frontend Mentor</a
+      >. Coded by
+      <a class="text-attribution" href="https://github.com/ALapina"
+        >Anna Lapina</a
+      >.
+    </div>
+  </body>
+  <script src="./main.js"></script>
+</html>
