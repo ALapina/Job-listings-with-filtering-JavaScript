@@ -3,7 +3,7 @@ let offers = [];
 const main = document.querySelector("#main");
 const filterPanel = document.querySelector("#filter-panel");
 
-// ------------------------------------ STEP 1. Fetch data and Draw initial data ------------------------------------
+// ------------------------------------ Fetch data and Draw initial data ------------------------------------
 fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
@@ -14,7 +14,7 @@ fetch("./data.json")
     });
   });
 
-// ------------------------------------ STEP 2. Draw and redraw list of companies ------------------------------------
+// ------------------------------------ Draw and redraw list of companies ------------------------------------
 const createOffer = (offer) => {
   const company = offer.company;
   const logo = offer.logo;
@@ -43,7 +43,6 @@ const createOffer = (offer) => {
     </li>`;
   });
 
-  //toolsTemplate.join("") - что бы убрать запятые между элементами в массиве
   const sectionTemplate = `<section 
   class="bg-white max-w-8xl w-11/12 shadow-block mb-14 sm:mb-10 mx-auto rounded-md flex flex-wrap md:flex-nowrap justify-between items-center border-l-8 ${isItFeatured ? "border-primary" : "border-white"}">
       <div class="flex flex-col sm:flex-row my-6">
@@ -99,7 +98,7 @@ const createOffer = (offer) => {
   section.innerHTML = sectionTemplate;
   main.appendChild(section);
 
-  // ------------------------------------ STEP 3. EventListeners on buttons ------------------------------------
+  // ------------------------------------ EventListeners on buttons ------------------------------------
   const roleButton = section.querySelector("[data-js=role]");
   roleButton.addEventListener("click", function () {
     addToSelected("roles", role);
@@ -127,7 +126,7 @@ const createOffer = (offer) => {
   );
 };
 
-// ------------------------------------ STEP 4. Add role, level, language or tool to selected ------------------------------------
+// ------------------------------------ Add role, level, language or tool to selected ------------------------------------
 const addToSelected = (group, value) => {
   if (!selected[group].includes(value)) {
     selected[group].push(value);
@@ -137,7 +136,7 @@ const addToSelected = (group, value) => {
   redrawOffers();
 };
 
-// ------------------------------------ STEP 5. Draw and redraw selected filter panel ------------------------------------
+// ------------------------------------ Draw and redraw selected filter panel ------------------------------------
 const redrawSelected = () => {
   //Cleanup - delete all elements from a page and redraw again
   filterPanel.innerHTML = "";
@@ -175,7 +174,7 @@ const redrawSelected = () => {
   filter.innerHTML = filterTemplate;
   filterPanel.appendChild(filter);
 
-  // ------------------------------------ STEP 6. Event listener on delete filter buttons
+  // ------------------------------------ Event listener on delete filter buttons ------------------------------------
 
   const deleteFilterButtons = Array.from(
     filter.querySelectorAll("[data-js=delete-filter]")
@@ -189,7 +188,7 @@ const redrawSelected = () => {
     });
   });
 
-  // ------------------------------------ STEP 7. Clear all filters and remove filter panel ------------------------------------
+  // ------------------------------------ Clear all filters and remove filter panel ------------------------------------
   const deleteAllFiltersButton = filter.querySelector("#delete-all-filters");
   deleteAllFiltersButton.addEventListener("click", () => {
     selected = { roles: [], levels: [], languages: [], tools: [] };
@@ -198,7 +197,7 @@ const redrawSelected = () => {
   });
 };
 
-// ------------------------------------ STEP 8.Remove element From Selected ------------------------------------
+// ------------------------------------ Remove element From Selected ------------------------------------
 const removeFromSelected = (group, valueToDelete) => {
   if (selected[group].includes(valueToDelete)) {
     selected[group] = selected[group].filter(
@@ -208,7 +207,7 @@ const removeFromSelected = (group, valueToDelete) => {
     redrawOffers();
   }
 
-  // ------------------------------------ STEP 9. If selected is empty - delete filter panel ------------------------------------
+  // ------------------------------------ If selected is empty - delete filter panel ------------------------------------
   const allValues = Object.values(selected);
   if (allValues.every((currentValue) => currentValue.length === 0)) {
     //delete filter panel
@@ -216,7 +215,7 @@ const removeFromSelected = (group, valueToDelete) => {
   }
 };
 
-// ------------------------------------ STEP 10. Draw and redraw selected offers ------------------------------------
+// ------------------------------------ Draw and redraw selected offers ------------------------------------
 const redrawOffers = () => {
   //cleanup
   main.innerHTML = "";
