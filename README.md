@@ -1,4 +1,4 @@
-# Job listings with filtering - JavaScript
+# 🚚 Job listings with filtering - JavaScript
 
 ![Design preview for the Job Listings coding challenge](./design/desktop-preview.jpg)
 
@@ -6,19 +6,17 @@
 
 This is my solution for [Frontend Mentor](https://www.frontendmentor.io/challenges/job-listings-with-filtering-ivstIPCt) challenge.
 
-[Rect version](https://github.com/ALapina/Job-listings-with-filtering-React)
+## 🔗 Live Link / Demo Link:
 
-Live: https://alapina.github.io/Job-listings-with-filtering-JavaScript
+- https://alapina.github.io/Job-listings-with-filtering-JavaScript
 
-✅ DONE:
+- Link to React Solution
+  - [Rect version](https://github.com/ALapina/Job-listings-with-filtering-React)
+
+## 🛠 Technologies Used:
 
 - Accessible HTML
 - CSS Tailwind (❤️ loved it so much!)
-- JS logic
-
-⚒ TODO:
-
-- Testing with Cypress, also CI with Cypress would be good https://docs.cypress.io/guides/guides/continuous-integration.html#Setting-up-CI
-- Unit testing?
-- Maybe put data on firebase and make api requests, just for practise?
-- Readme
+- Vanilla JS
+- [GitHub action](https://github.com/JamesIves/github-pages-deploy-action) for automatically deploying a project to GitHub pages.
+- Responsive design
